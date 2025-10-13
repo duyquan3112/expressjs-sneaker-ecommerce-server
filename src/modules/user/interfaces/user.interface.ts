@@ -1,6 +1,6 @@
 export enum UserRole {
   ADMIN = "admin",
-  USER = "user",
+  USER = "user"
 }
 
 export interface IUser {
@@ -9,7 +9,7 @@ export interface IUser {
   lastName: string;
   email: string;
   role: UserRole;
-  birthDate: Date;
+  birthDate: number; // unix time
   phoneNumber: string;
   address: string;
 }

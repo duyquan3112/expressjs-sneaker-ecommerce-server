@@ -1,6 +1,7 @@
 import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
 import { UserRole } from "../../interfaces/user.interface";
 import { Transform } from "class-transformer";
+import { TransformToDate } from "../../../../common/decorators/transform.decorator";
 
 export class CreateUserDTO {
   @IsString()
@@ -20,7 +21,7 @@ export class CreateUserDTO {
 
   @IsDate()
   @IsNotEmpty()
-  @Transform(({ value }) => value.trim())
+  @TransformToDate()
   birthDate: Date;
 
   @IsString()

@@ -7,7 +7,7 @@ const envFile = path.resolve(
 );
 
 dotenv.config({
-  path: envFile,
+  path: envFile
 });
 
 interface IConfig {
@@ -29,9 +29,9 @@ const config: IConfig = {
   redisUri: process.env.REDIS_URI as string,
   pgDbHost: process.env.PG_DB_HOST as string,
   pgDbPort: Number(process.env.PG_DB_PORT),
-  pgDbUser: process.env.PG_DB_USER as string,
+  pgDbUser: process.env.PG_DB_USERNAME as string,
   pgDbPassword: process.env.PG_DB_PASSWORD as string,
-  pgDbName: process.env.PG_DB_NAME as string,
+  pgDbName: process.env.PG_DB_NAME as string
 };
 
 export default config;

@@ -11,8 +11,8 @@ export const PostgresDatasource = new DataSource({
   database: config.pgDbName,
   synchronize: false,
   logging: ["query", "error", "migration"],
-  entities: [__dirname + "/../../modules/**/entities/*.entity.ts"],
-  migrations: [__dirname + "/../../modules/**/migrations/*.ts"],
+  entities: [__dirname + "/../modules/**/*.entity.{ts,js}"],
+  migrations: [__dirname + "/../migrations/*.{ts,js}"]
 });
 
 const connectPostgresDB = async () => {

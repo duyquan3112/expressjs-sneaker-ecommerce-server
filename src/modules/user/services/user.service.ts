@@ -3,6 +3,7 @@ import { CreateUserDTO } from "../dtos/request/create-user.dto";
 import { UserRole, IUser } from "../interfaces/user.interface";
 import { UpdateUserDTO } from "../dtos/request/update-user.dto";
 import { IUserService } from "../interfaces/user-service.interface";
+import { DateTimeUtil } from "../../../utils/datetime.util";
 
 export class UserService implements IUserService {
   private readonly userRepository: IUserRepository;
@@ -37,14 +38,16 @@ export class UserService implements IUserService {
     return {
       ...user,
       role: UserRole.USER, // Default role is USER
-      birthDate: new Date(user.birthDate),
+      birthDate: DateTimeUtil.toUnix(user.birthDate)
     };
   }
 
   private buildUpdateUserFromDTO(user: UpdateUserDTO): Partial<IUser> {
     return {
       ...user,
-      birthDate: user.birthDate ? new Date(user.birthDate) : undefined,
+      birthDate: user.birthDate
+        ? DateTimeUtil.toUnix(user.birthDate)
+        : undefined
     };
   }
 }

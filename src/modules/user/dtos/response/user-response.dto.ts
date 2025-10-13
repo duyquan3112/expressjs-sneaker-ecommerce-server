@@ -22,7 +22,8 @@ export class UserResponseDTO {
   role: UserRole;
 
   @Expose()
-  birthDate: Date;
+  //@Transform(({ obj }) => +obj.birthDate)
+  birthDate: number; // unix time
 
   @Expose()
   phoneNumber: string;

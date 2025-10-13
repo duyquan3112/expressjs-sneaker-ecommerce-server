@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import { IUser, UserRole } from "../interfaces/user.interface";
+import { DateTimeUtil } from "../../../utils/datetime.util";
 
 @Entity("users")
 export class User implements IUser {
@@ -19,12 +20,19 @@ export class User implements IUser {
   @Column({
     type: "enum",
     enum: UserRole,
-    default: UserRole.USER,
+    default: UserRole.USER
   })
   role!: UserRole;
 
-  @Column({ type: "date" })
-  birthDate!: Date;
+  @Column({
+    type: "bigint",
+    default: DateTimeUtil.toUnix("01-01-1970"),
+    transformer: {
+      to: (value: number) => value,
+      from: (value: string | number) => Number(value)
+    }
+  }) // unix time
+  birthDate!: number;
 
   @Column({ type: "varchar", length: 255, unique: true })
   phoneNumber!: string;
