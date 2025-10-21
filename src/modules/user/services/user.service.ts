@@ -1,9 +1,15 @@
 import { IUserRepository } from "../interfaces/user-repository.interface";
 import { CreateUserDTO } from "../dtos/request/create-user.dto";
-import { UserRole, IUser } from "../interfaces/user.interface";
 import { UpdateUserDTO } from "../dtos/request/update-user.dto";
 import { IUserService } from "../interfaces/user-service.interface";
-import { DateTimeUtil } from "../../../utils/datetime.util";
+import { User } from "../entities/user.entity";
+import { plainToInstance } from "class-transformer";
+import { UserHelper } from "../helpers/user.helper";
+import { AppError } from "../../../utils/app-error.util";
+import {
+  ErrorCode,
+  HttpStatusCode,
+} from "../../../constants/http-status-code.constant";
 
 export class UserService implements IUserService {
   private readonly userRepository: IUserRepository;
@@ -13,41 +19,36 @@ export class UserService implements IUserService {
   }
 
   async createUser(user: CreateUserDTO) {
-    const createUserData = this.buildCreateUserFromDTO(user);
+    const createUserData = UserHelper.buildCreateUserFromDTO(user);
     return this.userRepository.create(createUserData);
   }
 
   async getUserById(id: string) {
-    return this.userRepository.findById(id);
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new AppError(
+        HttpStatusCode.NOT_FOUND,
+        ErrorCode.NOT_FOUND,
+        "User not found!"
+      );
+    }
+
+    return user;
   }
 
   async getUsers() {
-    return this.userRepository.findAll();
+    return await this.userRepository.findAll();
   }
 
   async updateUser(id: string, user: UpdateUserDTO) {
-    const updateUserData = this.buildUpdateUserFromDTO(user);
+    const currentUserData = await this.getUserById(id);
+    const currentUser = plainToInstance(User, currentUserData);
+    const updateUserData = UserHelper.buildUpdateUserFromDTO(user, currentUser);
     return this.userRepository.update(id, updateUserData);
   }
 
   async deleteUser(id: string) {
     return this.userRepository.delete(id);
-  }
-
-  private buildCreateUserFromDTO(user: CreateUserDTO): Partial<IUser> {
-    return {
-      ...user,
-      role: UserRole.USER, // Default role is USER
-      birthDate: DateTimeUtil.toUnix(user.birthDate)
-    };
-  }
-
-  private buildUpdateUserFromDTO(user: UpdateUserDTO): Partial<IUser> {
-    return {
-      ...user,
-      birthDate: user.birthDate
-        ? DateTimeUtil.toUnix(user.birthDate)
-        : undefined
-    };
   }
 }
