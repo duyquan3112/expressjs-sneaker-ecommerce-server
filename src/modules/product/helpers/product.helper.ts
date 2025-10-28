@@ -16,7 +16,7 @@ import { ProductVariant } from "../interfaces/product-variant.interface";
 import { Product } from "../interfaces/product.interface";
 import sanitizeHtml from "sanitize-html";
 
-export const genAttributeTemplateFromVariant = (
+const genAttributeTemplateFromVariant = (
   variants:
     | ProductVariant[]
     | CreateProductVariantDTO[]
@@ -46,7 +46,7 @@ export const genAttributeTemplateFromVariant = (
   return attributesTemplate;
 };
 
-export const generateSKU = (
+const generateSKU = (
   brand: string,
   slug: string,
   attributes: Record<string, string | number>
@@ -71,7 +71,7 @@ export const generateSKU = (
 };
 
 // Generate slug from name
-export const generateSlug = (name: string): string => {
+const generateSlug = (name: string): string => {
   if (name.trim() === "") {
     throw new AppError(
       HttpStatusCode.BAD_REQUEST,

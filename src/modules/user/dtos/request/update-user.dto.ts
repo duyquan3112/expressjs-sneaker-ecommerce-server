@@ -1,4 +1,4 @@
-import { IsDate, IsEnum, IsOptional, IsString } from "class-validator";
+import { IsDate, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 import { TransformToDate } from "../../../../common/decorators/transform.decorator";
 

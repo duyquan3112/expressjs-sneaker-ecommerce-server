@@ -1,15 +1,17 @@
 import { Router } from "express";
 import { catchAsync } from "../../../middlewares/error-handler.middleware";
-import userController from "../modules/user.module";
+import { userModule } from "../modules/user.module";
 import {
   validateDto,
-  validateId,
+  validateId
 } from "../../../middlewares/validators.middleware";
 import { CreateUserDTO } from "../dtos/request/create-user.dto";
 import { UpdateUserDTO } from "../dtos/request/update-user.dto";
 import { AppRegex } from "../../../regexs/app.regex";
 
 const userRouter = Router();
+
+const userController = userModule.userController;
 
 userRouter.get(
   "/get-all",

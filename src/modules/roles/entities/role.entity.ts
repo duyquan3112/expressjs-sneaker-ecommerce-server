@@ -1,8 +1,9 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "../../user/entities/user.entity";
+import { IRole } from "../interfaces/role.interface";
 
 @Entity("roles")
-export class Role {
+export class Role implements IRole {
   @PrimaryGeneratedColumn("increment")
   id!: number;
 

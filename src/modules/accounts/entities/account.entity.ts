@@ -12,10 +12,11 @@ import {
 } from "typeorm";
 import { User } from "../../user/entities/user.entity";
 import { DateTimeUtil } from "../../../utils/datetime.util";
+import { IAccount } from "../interfaces/account.interface";
 
 @Entity("accounts")
 @Index(["email", "deletedAt"], { unique: true }) // only 1 [email, deletedAt: null] existed
-export class Account {
+export class Account implements IAccount {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 

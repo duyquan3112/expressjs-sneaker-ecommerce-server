@@ -7,7 +7,7 @@ import {
   JoinTable,
   Index,
   BeforeUpdate,
-  BeforeInsert,
+  BeforeInsert
 } from "typeorm";
 import { IUser } from "../interfaces/user.interface";
 import { DateTimeUtil } from "../../../utils/datetime.util";
@@ -28,7 +28,7 @@ export class User implements IUser {
   lastName!: string;
 
   @Index()
-  @Column({ type: "varchar", length: 255 })
+  @Column({ type: "varchar", length: 255, unique: true })
   email!: string;
 
   @Column({
@@ -36,13 +36,13 @@ export class User implements IUser {
     default: DateTimeUtil.toUnix("01-01-1970"),
     transformer: {
       to: (value: number) => value,
-      from: (value: string | number) => Number(value),
-    },
+      from: (value: string | number) => Number(value)
+    }
   }) // unix time
   birthDate!: number;
 
   @Index()
-  @Column({ type: "varchar", length: 255 })
+  @Column({ type: "varchar", length: 255, unique: true })
   phoneNumber!: string;
 
   @Column({ type: "varchar", length: 255 })
@@ -60,8 +60,8 @@ export class User implements IUser {
     default: () => `${DateTimeUtil.toUnix(new Date())}`,
     transformer: {
       to: () => DateTimeUtil.toUnix(new Date()),
-      from: (value: string | number) => Number(value),
-    },
+      from: (value: string | number) => Number(value)
+    }
   })
   createdAt!: number;
 
@@ -70,8 +70,8 @@ export class User implements IUser {
     default: () => `${DateTimeUtil.toUnix(new Date())}`,
     transformer: {
       to: () => DateTimeUtil.toUnix(new Date()),
-      from: (value: string | number) => Number(value),
-    },
+      from: (value: string | number) => Number(value)
+    }
   })
   updatedAt!: number;
 
@@ -95,8 +95,8 @@ export class User implements IUser {
     transformer: {
       to: (value: number | null | undefined) => value ?? null,
       from: (value: string | number | null) =>
-        value == null ? null : Number(value),
-    },
+        value == null ? null : Number(value)
+    }
   })
   deletedAt?: number | null;
 

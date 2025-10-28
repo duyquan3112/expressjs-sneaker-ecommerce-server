@@ -2,14 +2,16 @@ import { Router } from "express";
 import { catchAsync } from "../../../middlewares/error-handler.middleware";
 import {
   validateDto,
-  validateId,
+  validateId
 } from "../../../middlewares/validators.middleware";
 import { CreateProductDTO } from "../dtos/request/create-product.dto";
 import { UpdateProductDTO } from "../dtos/request/update-product.dto";
-import { productController } from "../modules/product.module";
+import { productModule } from "../modules/product.module";
 import { AppRegex } from "../../../regexs/app.regex";
 
 const productRouter = Router();
+
+const productController = productModule.productController;
 
 productRouter.get(
   "/all",
